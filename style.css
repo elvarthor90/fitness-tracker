@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fitness Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Fitness Tracker</h1>
+      <div class="sub">Daily log + charts (saved on this iPhone)</div>
+    </div>
+    <button id="btnAdd" class="btn primary">Add / Edit Today</button>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <div class="cardHeader">
+        <div class="cardTitle">Trend</div>
+        <div class="rangeWrap">
+          <label class="label">Range</label>
+          <select id="rangeSelect" class="select">
+            <option value="14">14 days</option>
+            <option value="30" selected>30 days</option>
+            <option value="90">90 days</option>
+            <option value="365">365 days</option>
+            <option value="all">All</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="toggles">
+        <label class="toggle">
+          <input type="checkbox" id="mWeight" checked />
+          <span>Weight</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="mCalories" />
+          <span>Calories</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="mSteps" />
+          <span>Steps</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="mCardio" />
+          <span>Cardio (min)</span>
+        </label>
+      </div>
+
+      <div class="chartWrap">
+        <canvas id="chart" width="1000" height="520"></canvas>
+      </div>
+
+      <div id="emptyState" class="emptyState hidden">
+        No data yet. Tap “Add / Edit Today” to log your first entry.
+      </div>
+
+      <div class="footerRow">
+        <button id="btnExport" class="btn">Export JSON</button>
+        <button id="btnImport" class="btn">Import JSON</button>
+        <button id="btnClear" class="btn danger">Clear All Data</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="cardTitle">Latest</div>
+      <div id="latest" class="latestGrid"></div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modalBackdrop" id="modalBackdrop"></div>
+    <div class="modalPanel">
+      <div class="modalHeader">
+        <div class="modalTitle">Daily Entry</div>
+        <button id="btnClose" class="btn">Close</button>
+      </div>
+
+      <form id="entryForm" class="form">
+        <label class="field">
+          <span>Date</span>
+          <input id="fDate" type="date" required />
+        </label>
+
+        <div class="row2">
+          <label class="field">
+            <span>Calories eaten</span>
+            <input id="fCalories" type="number" inputmode="numeric" placeholder="e.g. 2400" />
+          </label>
+
+          <label class="field">
+            <span>Weight</span>
+            <input id="fWeight" type="number" step="0.1" inputmode="decimal" placeholder="e.g. 82.4" />
+          </label>
+
+          <label class="field">
+            <span>Steps</span>
+            <input id="fSteps" type="number" inputmode="numeric" placeholder="e.g. 12000" />
+          </label>
+
+          <label class="field">
+            <span>Cardio (minutes)</span>
+            <input id="fCardio" type="number" inputmode="numeric" placeholder="e.g. 30" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Workout</span>
+          <input id="fWorkout" type="text" placeholder="e.g. Push day, squats, etc" />
+        </label>
+
+        <label class="field">
+          <span>Comments</span>
+          <textarea id="fComments" rows="4" placeholder="Any notes for the day..."></textarea>
+        </label>
+
+        <div class="formActions">
+          <button type="submit" class="btn primary">Save</button>
+          <button type="button" id="btnDeleteDay" class="btn danger">Delete This Day</button>
+        </div>
+
+        <div class="hint">
+          Tip: Saving again on the same date overwrites that day’s entry.
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <input id="filePicker" type="file" accept="application/json" class="hidden" />
+
+  <script src="app.js"></script>
+</body>
+</html>
